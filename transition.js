@@ -1,0 +1,56 @@
+const BORDERWRAPPER = document.querySelector(".border-wrapper");
+const DRAWER = document.querySelector(".drawer");
+const DRAWERCARD = document.querySelectorAll(".drawer-image, .drawer-title");
+const DRAWERTITLE = document.querySelectorAll(".drawer-title");
+const DIVIDERBAR = document.querySelectorAll(".divider-bar");
+
+
+
+// let pointerStyleSheet = document.styleSheets[1].cssRules[0].style;
+
+DRAWER.addEventListener("mousedown", addTransitions);
+DRAWER.addEventListener("mouseleave", removeTransitions);
+
+function addTransitions(poop) {
+    DRAWER.className += " extendo";
+    DRAWER.style.borderRightColor = "#0d6efd50";
+    DRAWERCARD.forEach(elem => {
+        elem.classList.add("mouse-pointer");
+    })
+    DRAWERTITLE.forEach(elem => {
+        elem.classList.add("show-drawer-title");
+    })
+    DIVIDERBAR.forEach(elem => {
+        elem.classList.add("divider-bar-fill");
+    })
+
+    console.log(poop);
+}
+
+
+
+function removeTransitions() {
+    DRAWER.classList.remove("extendo");
+    DRAWER.style.borderRightColor = "antiquewhite";
+    DRAWERCARD.forEach(elem => {
+        elem.classList.remove("mouse-pointer");
+    })
+    DRAWERTITLE.forEach(elem => {
+        elem.classList.remove("show-drawer-title");
+    })
+    DIVIDERBAR.forEach(elem => {
+        elem.classList.remove("divider-bar-fill");
+    })
+}
+
+
+
+// const INJECTCSS = (css) => {
+//     let style = document.createElement('style');
+//     // elem.type = "text/css";
+//     style.innerText = css;
+//     document.head.appendChild(style);
+//     // return style;
+// }
+
+// INJECTCSS("body {background-color: #000}");

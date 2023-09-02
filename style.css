@@ -1,0 +1,114 @@
+:root {
+    font-size: 62.5%;
+    font-family: 'JetBrains Mono', monospace;
+    --main-color: #0d6efd;
+
+    --non-expanded-drawer: 6rem;
+    --expanded-drawer: 22rem;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* font: inherit;
+    list-style: none; */
+}
+
+body {
+    min-height: 100vh;
+    background-color: antiquewhite;
+    font-size: 1.6rem;
+
+}
+
+
+.container {
+    min-height: 100vh;
+}
+
+/*  */
+/* Drawer section */
+/*  */
+
+.drawer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    min-height: 100vh;
+    /* width: max-content; */
+    width: var(--non-expanded-drawer);
+    overflow: hidden;
+    border-right-color: antiquewhite;
+    border-right-width: .2rem;
+    border-right-style: dashed;
+    transition: width 0.5s ease-in, border-right-color 1s ease;
+}
+
+.drawer-card {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 1rem;
+}
+
+img {
+height: 4rem;
+}
+
+.drawer-title {
+    color: #0d6efd00;
+    margin-left: 2rem;
+    font-size: 2rem;
+    transition: color 1.4s ease;
+}
+
+.show-drawer-title {
+    color: var(--main-color);
+}
+
+
+.extendo {
+    width: var(--expanded-drawer);
+}
+
+/* individual drawer card */
+
+
+
+/* Divider bar */
+
+.divider-container {
+    display: flex;
+    margin-left: 1.2rem;
+    margin-right: 1.2rem;
+}
+
+.divider-bar {
+    border-width: .2rem;
+    border-style: solid;
+    border-color: #0d6efd00;
+    width: var(--expanded-drawer);
+    height: 1.5rem;
+    border-radius: 1rem;
+    background-color: transparent;
+    transition: border-color 0.5s ease-in;
+}
+
+.divider-bar-fill {
+    /* background-color: #0d6efd50; */
+    border-color: #0d6efd50;
+}
+
+
+/* MOUSE CURSOR EFFECT */
+
+.mouse-pointer {
+    cursor: pointer;
+}
+
+/*  */
+/* HOVER EFFECTS */
+/*  */
+
+
