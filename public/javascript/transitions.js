@@ -4,6 +4,7 @@ const DRAWERCARD = document.querySelectorAll(".drawer-image, .drawer-title");
 const DRAWERTITLE = document.querySelectorAll(".drawer-title");
 const DIVIDERBAR = document.querySelectorAll(".divider-bar");
 const LANDINGBTN = document.querySelectorAll(".landing-btn");
+const LOGOUTBTN = document.querySelector(".logout-btn");
 
 
 // let pointerStyleSheet = document.styleSheets[1].cssRules[0].style;
@@ -17,6 +18,8 @@ LANDINGBTN.forEach(elem => {
 LANDINGBTN.forEach(elem => {
     elem.addEventListener("mouseleave", removeTransitions);
 });
+LOGOUTBTN.addEventListener("mouseover", addLogoutHover);
+LOGOUTBTN.addEventListener("mouseleave", removeLogoutHover);
 
 function addTransitions() {
     
@@ -34,15 +37,24 @@ function addTransitions() {
 
 }
 
-function addSignupHover (e) {
+function addSignupHover(e) {
     if (e.target.id == "signup") {
         const signup = document.querySelector("#signup");
-        signup.classList.add("hover-effect");
+        signup.classList.add("lndng-hover-effect");
     } else if (e.target.id == "login") {
         const login = document.querySelector("#login");
-        login.classList.add("hover-effect");
+        login.classList.add("lndng-hover-effect");
     }
-}   
+}
+
+function addLogoutHover() {
+    LOGOUTBTN.classList.add("logout-hover-effect");
+}
+
+function removeLogoutHover() {
+    LOGOUTBTN.classList.remove("logout-hover-effect");
+}
+
 
 // function addTransitions(e) {
 //     console.log(e.type, e);
@@ -83,9 +95,9 @@ function removeTransitions() {
         elem.classList.remove("divider-bar-fill");
     });
     const signup = document.querySelector("#signup");
-    signup.classList.remove("hover-effect");
+    signup.classList.remove("lndng-hover-effect");
     const login = document.querySelector("#login");
-    login.classList.remove("hover-effect");
+    login.classList.remove("lndng-hover-effect");
 };
 
 
