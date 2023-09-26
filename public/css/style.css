@@ -51,7 +51,13 @@ body {
     justify-content: flex-start;
     align-items: center;
     margin-left: 1rem;
+    pointer-events: none;
 }
+
+.drawer-card-clickable {
+    pointer-events: auto;
+}
+
 
 img {
 height: 4rem;
@@ -61,12 +67,24 @@ height: 4rem;
     filter: drop-shadow(5px 5px 2px rgba(0, 0, 0, 0.2));
 }
 
+
+.drawer-image:active {
+    filter: drop-shadow(2.5px 2.5px 2px rgba(0, 0, 0, 0.2));
+
+}
+
+
 .drawer-title {
     color: #0d6efd00;
     margin-left: 2rem;
     font-size: 2rem;
     transition: color 1.4s ease;
     text-shadow: 0.125rem 0.125rem rgba(0, 0, 0, 0.2);
+}
+
+.drawer-title:active {
+    text-shadow: 0rem 0rem rgba(0, 0, 0, 0.2);
+
 }
 
 .show-drawer-title {
@@ -104,7 +122,7 @@ height: 4rem;
 
 .divider-bar-fill {
     /* background-color: #0d6efd50; */
-    border-color: #0d6efd75;
+    border-color: #0d6efd;
 }
 
 
@@ -194,7 +212,7 @@ pointer events: auto */
 }
 
 .logout-btn {
-    border: .2rem solid #0d6efd ;
+    border: .2rem solid #0d6efd;
     width: 5rem;
     height: 5rem;
     border-radius: 5rem;

@@ -10,24 +10,29 @@ const DIVIDERBAR = document.querySelectorAll(".divider-bar");
 
 DRAWER.addEventListener("mousedown", addTransitions);
 DRAWER.addEventListener("mouseleave", removeTransitions);
-LANDINGBTN.forEach(elem => {
-    elem.addEventListener("mouseover", addSignupHover);
-});
+DRAWERCARD.forEach(elem => {
+    elem.addEventListener("mousedown", clickReaction);
+})
 
 function addTransitions() {
     
     DRAWER.className += " extendo";
     DRAWER.style.borderRightColor = "#0d6efd50";
-    DRAWERCARD.forEach(elem => {
-        elem.classList.add("mouse-pointer");
-    });
     DRAWERTITLE.forEach(elem => {
         elem.classList.add("show-drawer-title");
     });
     DIVIDERBAR.forEach(elem => {
         elem.classList.add("divider-bar-fill");
     });
+    clickReaction();
+    
+}
 
+function clickReaction() {
+    DRAWERCARD.forEach(elem => {
+        elem.classList.add("mouse-pointer");
+        elem.classList.add("drawer-card-clickable");
+    });
 }
 
 
@@ -63,6 +68,7 @@ function removeTransitions() {
     DRAWER.style.borderRightColor = "antiquewhite";
     DRAWERCARD.forEach(elem => {
         elem.classList.remove("mouse-pointer");
+        elem.classList.remove("drawer-card-clickable");
     });
     DRAWERTITLE.forEach(elem => {
         elem.classList.remove("show-drawer-title");
@@ -70,10 +76,7 @@ function removeTransitions() {
     DIVIDERBAR.forEach(elem => {
         elem.classList.remove("divider-bar-fill");
     });
-    const signup = document.querySelector("#signup");
-    signup.classList.remove("lndng-hover-effect");
-    const login = document.querySelector("#login");
-    login.classList.remove("lndng-hover-effect");
+   
 };
 
 
