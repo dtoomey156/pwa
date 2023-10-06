@@ -1,13 +1,27 @@
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+  }
+
 
 const express = require("express");
 const app = express();
 const path = require("path");
+const bcrypt = require("bcrypt");
 
+const users = [];
+
+// Sets the view engine as Embedded JavaScript templates as templating language
 app.set("view-engine", "ejs");
 
+
+// Serves static files via Express
 app.use(express.static(path.join(__dirname, "public")));
 
+// Parses the encoded URL info
+app.use(express.urlencoded( {extended: false}));
 
+
+// Routes that will be organized into the routes folder later
 app.get("/", (req, res) => {
     res.render("pages/index.ejs");
 });
@@ -17,17 +31,42 @@ app.get("/login", (req, res) => {
 
 });
 
+app.post("/login", (req, res) => {
+    
+
+});
+
+
+//
+//Register routes
+//
 
 app.get("/register", (req, res) => {
     res.render("pages/register.ejs");
 
 });
 
-app.post("/register", (req, res) => {
+app.post("/register", async (req, res) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        users.push({
+            id: Date.now().toString(),
+            name: req.body.name,
+            email: req.body.email,
+            password: hashedPassword
+        });
 
+        res.redirect("/login");
+
+    } catch {
+        res.redirect("/register");
+        console.log("something went wrong");
+    }
+    console.log(users);
 })
 
 
+// launches the app 
 app.listen(3000);
 
 
