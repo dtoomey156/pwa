@@ -1,13 +1,24 @@
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
-  }
+}
 
 
 const express = require("express");
 const app = express();
 const path = require("path");
 const bcrypt = require("bcrypt");
+const passport = require("passport");
+const initializePassport = require("./passport-config");
+const flash = require("express-flash");
+const session = require("express-session");
+const methodOverride = require("method-override")
 
+
+initializePassport(
+    passport,
+    email => users.find(user => user.email === email),
+    id => users.find(user => user.id === id)
+);
 const users = [];
 
 // Sets the view engine as Embedded JavaScript templates as templating language
@@ -20,33 +31,51 @@ app.use(express.static(path.join(__dirname, "public")));
 // Parses the encoded URL info
 app.use(express.urlencoded( {extended: false}));
 
+app.use(flash());
+
+app.use(session({
+    secret: process.env.SESS_SECRET,
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(methodOverride("_method"));
+
+
 
 // Routes that will be organized into the routes folder later
-app.get("/", (req, res) => {
-    res.render("pages/index.ejs");
+
+// Get routes
+app.get("/", checkAuthenticated, (req, res) => {
+    res.render("pages/index.ejs", {name: req.user.name});
 });
+
 
 app.get("/login", (req, res) => {
     res.render("pages/login.ejs");
 
 });
 
-app.post("/login", (req, res) => {
-    
-
-});
 
 
-//
-//Register routes
-//
 
-app.get("/register", (req, res) => {
+
+app.get("/register", checkNotAuthenticated, (req, res) => {
     res.render("pages/register.ejs");
 
 });
 
-app.post("/register", async (req, res) => {
+
+// Post routes
+app.post("/login", checkNotAuthenticated, passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureFlash: true
+}))
+
+app.post("/register", checkNotAuthenticated, async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         users.push({
@@ -65,6 +94,31 @@ app.post("/register", async (req, res) => {
     console.log(users);
 })
 
+app.delete("/logout", (req, res) => {
+    req.logout( err => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect("/login");
+    });
+
+});
+
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        res.redirect("/login");
+    }
+}
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        res.redirect("/");
+    } else {
+        return next();
+    }
+}
 
 // launches the app 
 app.listen(3000);
