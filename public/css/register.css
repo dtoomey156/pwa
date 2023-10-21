@@ -183,7 +183,9 @@ pointer events: auto */
     font-size: 6rem;
     font-weight: 700;
     pointer-events: auto;
-    padding: 2rem;
+    padding: 5rem 2rem;
+    box-shadow: .5rem .5rem 0.2rem 0.2rem rgba(0, 0, 0, 0.4),
+    -.25rem -.25rem 0.125rem rgba(0, 0, 0, 0.4);
 }
 
 input[type=email],
@@ -193,7 +195,7 @@ input[type=password] {
     border-radius: 5rem;
     width: 50rem;
     height: 5rem;
-    font-size: 3rem;
+    font-size: 2.5rem;
     padding: 1rem 4rem;
     transition: border 0.3s ease-in;
 }
@@ -215,8 +217,9 @@ input::placeholder {
     border: .2rem solid #0d6efd;
     border-radius: 5rem;
     width: 20rem;
-    height: 5rem;
+    height: 6rem;
     text-align: center;
+    color: #0d6efd;
     background-color: transparent;
     transition: background-color 0.2s ease-in,
     color 0.1s ease;

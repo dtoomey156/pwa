@@ -5,12 +5,16 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const session = require("express-session");
+const bodyParser = require("body-parser");
 const path = require("path");
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const mysql = require("mysql");
 const mysqlStore = require("express-mysql-session")(session);
 const app = express();
 const db = require("./db");
+
+const livereload = require("livereload");
+const connectLiveReload = require("connect-livereload");
 
 const PORT = process.env.APP_PORT || 3000;
 const IN_PROD = process.env.NODE_ENV === "production";
@@ -29,19 +33,33 @@ const options = {
 const pool = mysql.createPool(options);
 const sessionStore = new mysqlStore(options, pool);
 
-//Routes
-app.use("/", require("./routes/login"));
+
+// Refreshes the browser on server restart from Nodemon
+app.use(connectLiveReload());
+const liveReloadeServer = livereload.createServer();
+liveReloadeServer.server.once("connection", () => {
+  setTimeout(() => {
+    liveReloadeServer.refresh("/")
+  }, 100);
+});
 
 // Sets the view engine as Embedded JavaScript templates as templating language
-app.set("view-engine", "ejs");
+
+app.set("view engine", "ejs");
 
 // Serves static files via Express
 app.use(express.static(path.join(__dirname, "public")));
 
 // Parses the encoded URL info
-app.use(express.urlencoded( {extended: true}));
+// app.use(express.urlencoded( {extended: true}));
 
-// app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+
+app.use(bodyParser.json());
 
 app.use(
     session({
@@ -58,6 +76,58 @@ app.use(
     })
 );
 
+
+const redirectLogin = (req, res, next) => {
+  if (!req.session.userId) {
+    res.redirect("/login");
+  } else {
+    next();
+  }
+};
+
+const redirectHome = (req, res, next) => {
+  if (req.session.userId) {
+    res.redirect("/home");
+  } else {
+    next();
+  }
+};
+
+
+app.get("/", (req, res) => {
+  res.render("pages/landing");
+});
+
+app.get("/login", (req, res) => {
+    res.render("pages/login");
+});
+
+app.get("/register", (req, res) => {
+    res.render("pages/register");
+});
+
+app.post("/register", redirectHome, async (req, res, next) => {
+  try {
+    const email = req.body.email;
+    let password = req.body.password;
+
+    if (!email || !password) {
+      return res.sendStatus(400);
+    }
+
+    const salt = genSaltSync(10);
+    password = hashSync(password, salt);
+
+    const user = await db.insertUser(email, password).then((insertId) => {
+      return db.getUser(insertId);
+    });
+    req.session.userId = user.id;
+    return res.redirect("/login");
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(400);
+  }
+});
 
 
 
