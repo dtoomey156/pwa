@@ -102,11 +102,11 @@ app.get("/login", (req, res) => {
     res.render("pages/login");
 });
 
-app.get("/register", (req, res) => {
-    res.render("pages/register");
+app.get("/signup", (req, res) => {
+    res.render("pages/signup");
 });
 
-app.post("/register", redirectHome, async (req, res, next) => {
+app.post("/signup", redirectHome, async (req, res, next) => {
   try {
     const email = req.body.email;
     let password = req.body.password;

@@ -190,7 +190,7 @@ pointer events: auto */
 .landing-btn span {
     display: inline-block;
     position: relative;
-    transition: padding-right 0.2s ease-in;
+    transition: padding-right 0.25s ease-in;
 }
 
 .landing-btn span:after {
@@ -199,8 +199,8 @@ pointer events: auto */
     opacity: 0;
     top: 0;
     /* right: -7.5rem; */
-    right: -9rem;
-    transition: right 0.2s ease-in, opacity 0.2s ease-in;
+    right: -5rem;
+    transition: right 0.25s ease-in, opacity 0.2s ease-in;
 }
 
 .landing-btn:hover span {

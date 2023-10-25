@@ -104,8 +104,6 @@ height: 4rem;
     width: var(--expanded-drawer);
 }
 
-/* individual drawer card */
-
 
 
 /* Divider bar */
@@ -139,14 +137,6 @@ height: 4rem;
 .mouse-pointer {
     cursor: pointer;
 }
-
-
-
-/*  */
-/* HOVER EFFECTS */
-/*  */
-
-
 
 
 /*  */
@@ -209,6 +199,7 @@ input[type=password]:focus {
 
 input::placeholder {
     text-align: center;
+    color: rgba(0, 0, 0, 0.2);
 }
 
 .submit {
@@ -241,7 +232,7 @@ input::placeholder {
 .submit span {
     display: inline-block;
     position: relative;
-    transition: padding-right 0.2s ease-in;
+    transition: padding-right 0.25s ease-in;
 }
 
 .submit span:after {
@@ -251,7 +242,7 @@ input::placeholder {
     top: 0;
     /* right: -7.5rem; */
     right: -3rem;
-    transition: right 0.2s ease-in, opacity 0.2s ease-in;
+    transition: right 0.25s ease-in, opacity 0.2s ease-in;
 }
 
 .submit:hover span {
@@ -319,10 +310,16 @@ input::placeholder {
     color: antiquewhite;
 }
 
-/* .lndng-hover-effect {
-    background-color: #0d6efd;
-    color: antiquewhite;
-} */
+/* Redirect button */
+
+.redirect {
+    color: rgba(0, 0, 0, 0.2);
+    font-size: 2.5rem;
+}
+
+.register a {
+    text-decoration: none;
+}
 
 /*  */
 /* Logout section */
@@ -333,6 +330,10 @@ input::placeholder {
     margin-left: auto;
     margin-top: 5rem;
     margin-right: 5rem;
+}
+
+a {
+
 }
 
 .logout-btn {
