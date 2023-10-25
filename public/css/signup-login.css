@@ -217,7 +217,8 @@ input::placeholder {
     box-shadow: .2rem .2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.4), -.1rem -.1rem 0.125rem rgba(0, 0, 0, 0.4);
 }
 
-.submit:hover {
+.submit:hover,
+.submit:focus {
     background-color: #0d6efd;
     color: antiquewhite;
 }
@@ -245,11 +246,13 @@ input::placeholder {
     transition: right 0.25s ease-in, opacity 0.2s ease-in;
 }
 
-.submit:hover span {
+.submit:hover span,
+.submit:focus span {
     padding-right: 2rem;
 }
 
-.submit:hover span:after {
+.submit:hover span:after,
+.submit:focus span:after {
     opacity: 1;
     right: -.75rem;
 }
@@ -312,13 +315,15 @@ input::placeholder {
 
 /* Redirect button */
 
-.redirect {
+/* .redirect {
     color: rgba(0, 0, 0, 0.2);
     font-size: 2.5rem;
-}
+} */
 
 .register a {
     text-decoration: none;
+    color: rgba(0, 0, 0, 0.2);
+    font-size: 2.5rem;
 }
 
 /*  */
@@ -330,10 +335,6 @@ input::placeholder {
     margin-left: auto;
     margin-top: 5rem;
     margin-right: 5rem;
-}
-
-a {
-
 }
 
 .logout-btn {

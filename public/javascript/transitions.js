@@ -35,7 +35,9 @@ function clickReaction() {
     });
 }
 
+LOGOUTBTN.addEventListener("click", () => {
 
+})
 
 
 // function addTransitions(e) {

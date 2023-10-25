@@ -93,18 +93,36 @@ const redirectHome = (req, res, next) => {
   }
 };
 
+// Get routes
 
-app.get("/", (req, res) => {
+app.get("/", redirectHome, (req, res) => {
   res.render("pages/landing");
 });
 
-app.get("/login", (req, res) => {
-    res.render("pages/login");
-});
-
-app.get("/signup", (req, res) => {
+app.get("/signup", redirectHome, (req, res) => {
     res.render("pages/signup");
 });
+
+app.get("/login", redirectHome, (req, res) => {
+  res.render("pages/login");
+})
+
+app.get("/home", redirectLogin, async (req, res) => {
+  const { userId } = req.session;
+  if (userId) {
+    try {
+      const user = await db.getUser(userId);
+      console.log(user);
+      req.user = user;
+      res.render("pages/home")
+    } catch (e) {
+      console.log(e);
+      res.sendStatus(404);
+    }
+  }
+});
+
+// Post routes
 
 app.post("/signup", redirectHome, async (req, res, next) => {
   try {
@@ -122,6 +140,7 @@ app.post("/signup", redirectHome, async (req, res, next) => {
       return db.getUser(insertId);
     });
     req.session.userId = user.id;
+    console.log(user, password)
     return res.redirect("/login");
   } catch (e) {
     console.log(e);
@@ -129,7 +148,46 @@ app.post("/signup", redirectHome, async (req, res, next) => {
   }
 });
 
+app.post("/login", redirectHome, async (req, res) => {
+  try {
+    const email = req.body.email;
+    let password = req.body.password;
+    user = await db.getUserByEmail(email);
 
+    if (!user) {
+      return res.send({
+        message: "Invalid email or password",
+      });
+    }
+
+    const isValidPassword = compareSync(password, user.password);
+    if (isValidPassword) {
+      user.password = undefined;
+      req.session.userId = user.id;
+      return res.redirect("/home");
+
+    } else {
+
+      res.send("Invalid email or password");
+      return res.redirect("/login");
+    }
+
+  } catch (e) {}
+    console.log(e);
+    res.render("pages/login");
+});
+
+
+app.post("/logout", redirectLogin, (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.redirect("/home");
+    }
+    sessionStore.close();
+    res.clearCookie(process.env.SESS_NAME);
+    res.redirect("/login");
+  });
+});
 
 // launches the server
 app.listen(PORT, console.log(`Server is listening on ${PORT}`))
