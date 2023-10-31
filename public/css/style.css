@@ -169,9 +169,10 @@ pointer events: auto */
 }
 
 .landing-btn {
-    display: inline-block;
-    text-align: center;
-    border: .2rem solid #0d6efd ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: .2rem solid #0d6efd;
     width: 50rem;
     min-width: 20rem;
     height: 22.5rem;
@@ -188,7 +189,7 @@ pointer events: auto */
 }
 
 .landing-btn span {
-    display: inline-block;
+    /* display: inline-block; */
     position: relative;
     transition: padding-right 0.25s ease-in;
 }
@@ -197,7 +198,7 @@ pointer events: auto */
     content: "\00bb";
     position: absolute;
     opacity: 0;
-    top: 0;
+    /* top: 0; */
     /* right: -7.5rem; */
     right: -5rem;
     transition: right 0.25s ease-in, opacity 0.2s ease-in;
@@ -224,10 +225,11 @@ pointer events: auto */
     color: antiquewhite;
 }
 
-/* .lndng-hover-effect {
-    background-color: #0d6efd;
-    color: antiquewhite;
-} */
+#signup,
+#login {
+    text-decoration: none;
+}
+
 
 /*  */
 /* Logout section */

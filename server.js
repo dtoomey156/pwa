@@ -172,9 +172,11 @@ app.post("/login", redirectHome, async (req, res) => {
       return res.redirect("/login");
     }
 
-  } catch (e) {}
+  } catch (e) {
+
     console.log(e);
-    res.render("pages/login");
+  }
+    
 });
 
 
